@@ -23,7 +23,7 @@ Secure the AWS Root User by enabling **Multi-Factor Authentication (MFA)** and a
 
 <!-- CONTRIBUTING -->
 ```text
-screenshots/root-mfa-enabled.png
+![Root MFA Enabled](root-mfa-enabled.png)
 
 **Result:** MFA has been successfully enabled on the AWS Root User. This adds an extra layer of security to the AWS account.
 
