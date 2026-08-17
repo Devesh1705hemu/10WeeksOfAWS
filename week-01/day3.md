@@ -6,33 +6,56 @@
 
 Secure the AWS Root User by enabling **Multi-Factor Authentication (MFA)** and avoiding the Root User for daily AWS tasks.
 
+---
+
 ### 🛠️ Steps
 
 1. Create or log in to your AWS account.
-2. Search for `IAM` in the AWS Console.
-3. Open the security recommendations or MFA settings.
-4. Enable MFA on the Root User.
-5. Stop using the Root User for daily work.
-6. Create an IAM admin user only if needed for regular work.
+2. Open the **AWS Management Console**.
+3. Navigate to **IAM**.
+4. Open the **Security credentials** or MFA settings for the Root User.
+5. Enable **Multi-Factor Authentication (MFA)**.
+6. Verify that MFA is successfully enabled.
+7. Avoid using the Root User for daily AWS tasks.
+8. Create an IAM user or role with appropriate permissions for regular work.
 
-### 📦 Deliverables
+---
 
-#### 📸 Screenshot of Root MFA Enabled
+### 📸 Deliverable: Root MFA Enabled
 
-<img width="1020" height="800" alt="Screenshot 2026-08-17 005826(1)" src="https://github.com/user-attachments/assets/5af97cba-1fea-4f49-9507-5125fd57568c" />
-
-<!-- CONTRIBUTING -->
-```text
 ![Root MFA Enabled](root-mfa-enabled.png)
 
-**Result:** MFA has been successfully enabled on the AWS Root User. This adds an extra layer of security to the AWS account.
+### ✅ Result
 
-### 📝 Why Root User should not be used daily
+MFA has been successfully enabled on the AWS Root User.
 
-The Root User has full access to the AWS account. Using it daily can increase the risk of accidentally changing or deleting resources.
+This adds an additional layer of security to the AWS account by requiring an authentication code along with the account credentials.
 
-For daily work, it is safer to use an IAM user or role with only the required permissions.
+---
 
+### 📝 Why the Root User Should Not Be Used Daily
 
+The AWS Root User has **full access to the AWS account**. Using it for everyday tasks increases the risk of accidentally changing or deleting important resources.
 
+For regular AWS work, it is safer to use an **IAM user or IAM role** with only the permissions required for the task.
 
+### 🔐 Security Best Practices
+
+* Enable MFA on the Root User.
+* Do not use the Root User for everyday tasks.
+* Do not share AWS account credentials.
+* Use IAM users or roles for regular operations.
+* Follow the principle of **least privilege**.
+* Regularly review IAM permissions and security settings.
+
+---
+
+### 📚 What I Learned
+
+Through this lab, I learned:
+
+* Why securing the AWS Root User is important.
+* How to enable MFA for the Root User.
+* Why the Root User should not be used for daily operations.
+* The importance of IAM users, roles, and least-privilege access.
+* Basic AWS account security best practices.
