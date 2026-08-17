@@ -21,7 +21,7 @@ Secure the AWS Root User by enabling **Multi-Factor Authentication (MFA)** and a
 
 <img width="1020" height="800" alt="Screenshot 2026-08-17 005826(1)" src="https://github.com/user-attachments/assets/5af97cba-1fea-4f49-9507-5125fd57568c" />
 
-
+<!-- CONTRIBUTING -->
 ```text
 screenshots/root-mfa-enabled.png
 
