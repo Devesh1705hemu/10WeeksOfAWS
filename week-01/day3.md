@@ -59,3 +59,70 @@ Through this lab, I learned:
 * Why the Root User should not be used for daily operations.
 * The importance of IAM users, roles, and least-privilege access.
 * Basic AWS account security best practices.
+
+
+
+# 💰 Lab 2 - Billing Alert
+
+### 🎯 Objective
+
+Set up an AWS budget to monitor cloud spending and receive an alert when the estimated cost reaches the defined threshold.
+
+---
+
+### 🛠️ Steps
+
+1. Open the **AWS Management Console**.
+2. Navigate to the **Billing and Cost Management Dashboard**.
+3. Open **Budgets**.
+4. Create a new **Cost Budget**.
+5. Set the budget amount, for example **$5**.
+6. Configure an alert notification for the budget.
+7. Enter the email address where the billing alert should be received.
+8. Confirm and create the budget.
+
+---
+
+### 📸 Deliverable: Billing Budget Alert
+
+Add your screenshot below:
+
+![AWS Billing Budget Alert](billing-budget-alert.png)
+
+
+
+---
+
+### ✅ Result
+
+An AWS cost budget was created with a **$5 spending limit** and an alert configured to notify when the estimated AWS cost approaches or reaches the configured threshold.
+
+---
+
+### 📝 Why Billing Should Be Monitored from Day 1
+
+AWS follows a **pay-as-you-go** pricing model, so even small configuration mistakes can result in unexpected charges.
+
+Monitoring billing from the beginning helps to:
+
+* Track AWS spending regularly.
+* Detect unexpected resource usage.
+* Avoid unnecessary cloud costs.
+* Identify resources that are no longer needed.
+* Understand how different AWS services affect the bill.
+* Build good cloud cost-management habits.
+
+For beginners, setting a small budget and enabling billing alerts is a simple way to learn AWS while reducing the risk of unexpected charges.
+
+---
+
+### 📚 What I Learned
+
+Through this lab, I learned:
+
+* How to access the AWS Billing Dashboard.
+* How to create an AWS Cost Budget.
+* How to configure billing alerts.
+* Why monitoring cloud costs is important.
+* How budgets can help control AWS spending.
+
