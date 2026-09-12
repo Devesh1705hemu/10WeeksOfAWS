@@ -496,6 +496,12 @@ Capture:
 - Allowed S3 access screenshot.
 - `Access Denied` screenshot for an unauthorized action.
 
+#### Screenshots
+
+![S3 Read-Only Access - Screenshot 1](./S3%20Read-Only%20Access_s1.png)
+
+![S3 Read-Only Access - Screenshot 2](./S3%20Read-Only%20Access_s2.png)
+
 ### ✅ Result
 
 The `learner-s3` user can view S3 resources but cannot perform unauthorized write or delete operations.
@@ -544,6 +550,12 @@ Capture:
 - EC2 Dashboard screenshot.
 - Denied create/terminate action screenshot.
 
+  #### Screenshots
+
+![EC2 Read-Only Access - Screenshot 1](./EC2%20Read-Only%20Access_s1.png)
+
+![EC2 Read-Only Access - Screenshot 2](./EC2%20Read-Only%20Access_s2.png)
+
 ### ✅ Result
 
 The `learner-ec2` user can view EC2 resources but cannot create or terminate EC2 instances.
@@ -589,6 +601,13 @@ Capture:
 - Attached policy screenshot.
 - Billing Dashboard screenshot.
 - Access denied screenshot for an unauthorized action.
+
+
+#### Screenshots
+
+![Billing Read-Only Access - Screenshot 1](./Billing%20Read-Only%20Access_s1.png)
+
+![Billing Read-Only Access - Screenshot 2](./Billing%20Read-Only%20Access_s2.png)
 
 ### ✅ Result
 
@@ -641,6 +660,11 @@ Replace `YOUR-BUCKET-NAME` with your actual bucket name.
     }
   ]
 }
+```
+
+### 📸 Screenshot
+
+![Custom S3 Read-Only Training Policy](./CustomS3ReadOnlyTrainingPolicy.png)
 
 
 
