@@ -668,3 +668,144 @@ Replace `YOUR-BUCKET-NAME` with your actual bucket name.
 
 
 
+
+
+
+# Day 5 - Optional GitHub OIDC Challenge
+
+This challenge is optional. Try it only after completing the IAM User and IAM Group labs.
+
+In this challenge, GitHub Actions will access AWS without storing long-lived AWS access keys.
+
+Instead, GitHub Actions will use an OIDC token to request temporary AWS credentials through AWS STS.
+
+---
+
+## Architecture
+
+GitHub Actions -> OIDC Token -> AWS IAM OIDC Provider -> AWS STS -> Temporary AWS Credentials -> AWS Resources
+
+### Architecture Screenshot
+
+<!-- Add architecture screenshot here -->
+
+![GitHub OIDC Architecture](./screenshots/day-05/architecture.png)
+
+---
+
+## Step 1 - Add OIDC Provider
+
+Open:
+
+`AWS Console -> IAM -> Identity Providers -> Add Provider`
+
+Use:
+
+| Setting | Value |
+|---|---|
+| Provider type | `OpenID Connect` |
+| Provider URL | `https://token.actions.githubusercontent.com` |
+| Audience | `sts.amazonaws.com` |
+
+The OIDC provider allows AWS to trust identity tokens issued by GitHub Actions.
+
+### OIDC Provider Screenshot
+
+<!-- Add screenshot here -->
+
+![OIDC Provider](./screenshots/day-05/oidc-provider.png)
+
+---
+
+## Step 2 - Create IAM Role
+
+Create an IAM role with the following configuration:
+
+| Setting | Value |
+|---|---|
+| Trusted entity | `Web Identity` |
+| Provider | `token.actions.githubusercontent.com` |
+| Audience | `sts.amazonaws.com` |
+| Permission | `AmazonS3ReadOnlyAccess` |
+| Example role name | `github-oidc-challenge-role` |
+
+The IAM role allows GitHub Actions to access AWS resources using temporary credentials.
+
+### IAM Role Screenshot
+
+<!-- Add screenshot here -->
+
+![IAM Role](./screenshots/day-05/iam-role.png)
+
+---
+
+## Step 3 - Trust Policy
+
+The IAM role needs a trust policy that allows GitHub Actions to assume the role.
+
+Replace these placeholders before using the policy:
+
+- `<AWS_ACCOUNT_ID>` with your AWS account ID
+- `<GITHUB_USER>` with your GitHub username
+- `<REPOSITORY>` with your repository name
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::<AWS_ACCOUNT_ID>:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringLike": {
+          "token.actions.githubusercontent.com:sub": "repo:<GITHUB_USER>/<REPOSITORY>:*"
+        }
+      }
+    }
+  ]
+}
+```
+## Step 4 - Create GitHub Actions Workflow
+
+Create the following file in your GitHub repository:
+
+`.github/workflows/aws-oidc-challenge.yml`
+
+Use the following workflow:
+
+```yaml
+name: AWS OIDC Challenge
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test-aws-oidc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<ROLE_NAME>
+          aws-region: ap-south-1
+
+      - run: aws sts get-caller-identity
+
+      - run: aws s3 ls
+```
+### GithubAction_Workflow Screenshot 
+
+
+
