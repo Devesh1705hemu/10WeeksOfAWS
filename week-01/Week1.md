@@ -713,7 +713,7 @@ The OIDC provider allows AWS to trust identity tokens issued by GitHub Actions.
 
 <!-- Add screenshot here -->
 
-![OIDC Provider](./screenshots/day-05/oidc-provider.png)
+![OIDC Provider](./OIDC%20provider.png)
 
 ---
 
@@ -735,7 +735,7 @@ The IAM role allows GitHub Actions to access AWS resources using temporary crede
 
 <!-- Add screenshot here -->
 
-![IAM Role](./screenshots/day-05/iam-role.png)
+![IAM Role](./iam_role.png)
 
 ---
 
@@ -771,6 +771,10 @@ Replace these placeholders before using the policy:
   ]
 }
 ```
+###  Trust Policy
+
+![Trust Policy](./oidc_trust-policy.png)
+
 ## Step 4 - Create GitHub Actions Workflow
 
 Create the following file in your GitHub repository:
@@ -805,7 +809,22 @@ jobs:
 
       - run: aws s3 ls
 ```
-### GithubAction_Workflow Screenshot 
+### GitHub Actions Workflow
+
+![GitHub Actions Workflow](./github_workflows_aws-oidc-challenge.png)
+
+
+## Step 5 - Run the GitHub Actions Workflow
+
+Go to:
+
+`GitHub Repository -> Actions -> AWS OIDC Challenge`
+
+###  Successful GitHub Actions Run
+
+![GitHub Actions Run](./GitHub%20Actions%20run.png)
+
+
 
 
 
