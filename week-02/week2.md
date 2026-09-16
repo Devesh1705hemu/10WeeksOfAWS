@@ -242,5 +242,231 @@ The role has:
 * **Instance Profile** → Connects a role to EC2.
 * **Temporary Credentials** → Expire and can be refreshed.
 
+
+
+
+# Day 3 Practical - EC2 Reads S3 Using an IAM Role
+
+## 🎯 Goal
+
+Allow an **EC2 instance to read one S3 bucket** without storing permanent
+access keys.
+
+**Read = Allowed ✅**  
+**Write/Delete = Denied ❌**
+
+---
+
+## Architecture
+
+```text
+EC2
+ ↓
+Instance Profile
+ ↓
+IAM Role
+ ↓
+STS Temporary Credentials
+ ↓
+S3 Bucket
+ ↓
+Read/List ✅
+Write/Delete ❌
+````
+
+📸 **Screenshot: Architecture**
+
+> Add screenshot here.
+
+<br><br>
+
+---
+
+## Cost & Safety
+
+* Use a small Free Tier eligible EC2 instance when available.
+* Use a test S3 bucket.
+* Do not create IAM user access keys.
+* Never share temporary credentials.
+* Delete resources after completing the lab.
+
+---
+
+## Step 1 - Create Test S3 Bucket
+
+* Create a unique S3 bucket.
+* Keep **Block Public Access** enabled.
+* Upload `day3-test.txt`.
+* Add a simple non-sensitive message.
+* Save the bucket name.
+
+📸 **Screenshot: S3 Bucket**
+
+![S3 Bucket](./Screenshot/bucket.png)
+
+<br><br>
+
+---
+
+## Step 2 - Create EC2 IAM Role
+
+Go to:
+
+**IAM → Roles → Create Role**
+
+* Trusted entity: **AWS Service**
+* Use case: **EC2**
+* Role name: `Week2Day3EC2S3ReadRole`
+* Do not attach broad S3 permissions.
+* Trust policy should allow `ec2.amazonaws.com` to assume the role.
+
+📸 **Screenshot: IAM Role**
+
+![IAM Role](./Screenshot/Role.png)
+
+<br><br>
+
+---
+
+## Step 3 - Add Least-Privilege S3 Permissions
+
+Create an inline policy named:
+
+`ReadOneTrainingBucket`
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListOneBucket",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME"
+    },
+    {
+      "Sid": "ReadObjectsInOneBucket",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+    }
+  ]
+}
 ```
+
+### Important
+
+The policy does **not** include:
+
+* `s3:PutObject`
+* `s3:DeleteObject`
+* Broad `s3:*` permissions
+
+📸 **Screenshot: Permission Policy**
+
+![Permission Policy](./Screenshot/Add_privilege.png)
+
+<br><br>
+
+---
+
+## Step 4 - Attach Role to EC2
+
+* Launch a small Amazon Linux EC2 instance.
+* Select `Week2Day3EC2S3ReadRole` as the IAM instance profile.
+* Connect using EC2 Instance Connect or Session Manager.
+* Wait for the instance checks to pass.
+
+If EC2 already exists:
+
+**Actions → Security → Modify IAM Role**
+
+📸 **Screenshot: EC2 IAM Role**
+
+> Add screenshot here.
+
+<br><br>
+
+---
+
+## Step 5 - Test Allowed Access
+
+First check that no credentials were manually configured:
+
+```bash
+aws configure list
 ```
+
+Then test:
+
+```bash
+aws sts get-caller-identity
+aws s3 ls s3://YOUR-BUCKET-NAME
+aws s3 cp s3://YOUR-BUCKET-NAME/day3-test.txt -
+```
+
+### Expected Result
+
+* Caller identity shows an **assumed role**.
+* S3 bucket listing works.
+* Test file can be read.
+
+📸 **Screenshot: Successful S3 Access**
+
+![Allowed Test](./Screenshot/Allowed_test.png)
+
+<br><br>
+
+---
+
+## Step 6 - Test Denied Access
+
+Create a test file:
+
+```bash
+printf 'write test\n' > /tmp/write-test.txt
+```
+
+Try uploading it:
+
+```bash
+aws s3 cp /tmp/write-test.txt s3://YOUR-BUCKET-NAME/write-test.txt
+```
+
+### Expected Result
+
+```text
+AccessDenied
+```
+
+This proves that **least privilege is working**.
+
+📸 **Screenshot: Access Denied**
+![Denied Test](./Screenshot/Test_denied.png)
+
+<br><br>
+
+---
+
+### ⚠️ Never Share
+
+* Access Key ID
+* Secret Access Key
+* Session Token
+* Private Key
+* Sensitive account information
+* Private data
+
+---
+
+# Key Takeaways
+
+* **EC2 → IAM Role → STS → Temporary Credentials → S3**
+* IAM Role avoids storing permanent access keys.
+* `s3:ListBucket` allows bucket listing.
+* `s3:GetObject` allows reading objects.
+* No `PutObject` means uploading is denied.
+* **AccessDenied is expected and proves least privilege.**
+
+
+
