@@ -469,4 +469,78 @@ This proves that **least privilege is working**.
 * **AccessDenied is expected and proves least privilege.**
 
 
+# Week 2 Cleanup
+
+## 🎯 Goal
+
+Clean up all AWS resources created during the lab to avoid unnecessary costs
+and keep the AWS account secure.
+
+---
+
+## Cleanup Order
+
+### 1. Terminate EC2 Instance
+
+- Terminate the test EC2 instance.
+- Confirm that the instance is no longer running.
+
+### 2. Check EBS Volume
+
+- Check attached EBS volumes.
+- Delete unused volumes.
+- Make sure no unnecessary volume remains.
+
+### 3. Delete S3 Objects
+
+- Open the test S3 bucket.
+- Delete all test objects.
+- Confirm the bucket is empty.
+
+### 4. Delete S3 Bucket
+
+- Delete the empty test bucket.
+- Confirm that the bucket no longer exists.
+
+### 5. Delete IAM Role
+
+- Delete the inline policy.
+- Delete the test IAM role if it is no longer needed.
+
+### 6. Check Instance Profile
+
+- Confirm the EC2 instance profile is removed.
+- If it was created manually, delete it separately.
+
+---
+
+## Final Check
+
+- [ ] No test EC2 instance is running.
+- [ ] No unused EBS volume remains.
+- [ ] No unnecessary Elastic IP remains.
+- [ ] Test S3 bucket and objects are deleted.
+- [ ] Test IAM role is deleted if no longer needed.
+- [ ] Instance profile is removed if no longer needed.
+- [ ] No IAM user access keys were created.
+
+---
+
+## 📸 Cleanup Proof
+
+Add a screenshot showing that the AWS resources have been cleaned up.
+
+![Cleanup Screenshot](./Screenshot/EC2-cleanup.png)
+![Cleanup Screenshot](./Screenshot/bucket-cleanup.png)
+![Cleanup Screenshot](./Screenshot/Iam-cleanup.png)
+
+> Add your cleanup screenshot here.
+
+---
+
+## ✅ Cleanup Complete
+
+> **Terminate → Delete → Verify → Secure**
+
+
 
