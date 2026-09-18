@@ -168,4 +168,5 @@ across accounts.
 **Explicit Deny = wins.**
 
 
-***Summary of Day-04***
+## Summary of Day-04
+![Day 4 Summary](./Screenshot/Day04-summary.png)
