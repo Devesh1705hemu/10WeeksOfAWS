@@ -170,3 +170,10 @@ across accounts.
 
 ## Summary of Day-04
 ![Day 4 Summary](./Screenshot/Day04-summary.png)
+
+
+
+
+# Day 4 Exercise - Draw the Multi-Account Architecture
+## By Chatgpt
+![Day 4 Summary](./Screenshot/multiaccount_archi.png)
